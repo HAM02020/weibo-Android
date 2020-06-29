@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/xiaoxi3" android:state_checked="false"/>
+    <item android:drawable="@drawable/xiaoxi3_hl" android:state_checked="true"/>
+</selector>
