@@ -1,4 +1,4 @@
-package com.example.afinal;
+package com.example.afinal.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -11,21 +11,20 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.example.afinal.MainTab.Home.MainTab01;
-import com.example.afinal.MainTab.MainTab02;
-import com.example.afinal.MainTab.MainTab03;
-import com.example.afinal.MainTab.MainTab04;
+import com.example.afinal.R;
+import com.example.afinal.View.MainTab.Home.MainTab01;
+import com.example.afinal.View.MainTab.MainTab02;
+import com.example.afinal.View.MainTab.MainTab03;
+import com.example.afinal.View.MainTab.MainTab04;
 import com.example.afinal.Model.WBUserAccount;
 
 import java.nio.file.Files;
@@ -72,7 +71,8 @@ public class MainActivity extends FragmentActivity  implements View.OnClickListe
         if(!WBUserAccount.Shared().isLogin()){
             return;
         }
-
+        WBUserAccount.setInstance(WBUserAccount.initFromFile(getFilesDir().getAbsolutePath()+"/"+WBUserAccount.fileName));
+        tab01.getStatusList(true);
     }
 
     @Override
@@ -110,6 +110,7 @@ public class MainActivity extends FragmentActivity  implements View.OnClickListe
         if(Files.exists(Paths.get(getFilesDir().getAbsolutePath()+"/"+WBUserAccount.fileName))){
             WBUserAccount.setInstance(WBUserAccount.initFromFile(getFilesDir().getAbsolutePath()+"/"+WBUserAccount.fileName));
             Log.i("woaini",WBUserAccount.Shared().uid);
+            Log.i("woaini",getFilesDir().getAbsolutePath());
             tab01.getStatusList(true);
         }
         else{

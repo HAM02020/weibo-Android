@@ -1,4 +1,4 @@
-package com.example.afinal;
+package com.example.afinal.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 
 import com.alibaba.fastjson.JSON;
 import com.example.afinal.Model.WBUserAccount;
+import com.example.afinal.R;
 import com.example.afinal.Tools.NetworkManager;
 import com.example.afinal.Tools.WBCommon;
 
@@ -72,7 +73,6 @@ public class WBLoginWebActivity extends AppCompatActivity {
                         }
                     }
                 });
-
 
                 finish();
                 return true;

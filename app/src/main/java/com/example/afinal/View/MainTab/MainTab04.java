@@ -1,4 +1,4 @@
-package com.example.afinal.MainTab;
+package com.example.afinal.View.MainTab;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,14 +11,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.afinal.R;
 
-public class MainTab03 extends Fragment implements View.OnClickListener {
+public class MainTab04 extends Fragment implements View.OnClickListener {
 
     private View thisView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        thisView = inflater.inflate(R.layout.fragment_message,container,false);
+        thisView = inflater.inflate(R.layout.fragment_profile,container,false);
         setupUI();
         return thisView;
 

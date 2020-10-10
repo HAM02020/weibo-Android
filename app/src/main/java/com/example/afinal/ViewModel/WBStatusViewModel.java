@@ -13,12 +13,13 @@ public class WBStatusViewModel
     public String retweetedStr;
     public List<String> wap360s;
     public List<String> larges;
+    public boolean isRetweetedStatus;
     public WBStatusViewModel(WBStatus status)
     {
         pic_urls = new Pic_urls();
         this.status = status;
         //判断是否有转发微博
-        boolean isRetweetedStatus = status.retweeted_status!=null ? true : false;
+        isRetweetedStatus = status.retweeted_status!=null ? true : false;
 
         pic_urls = !isRetweetedStatus? status.pic_urls : status.retweeted_status.pic_urls;
         retweetedStr = !isRetweetedStatus ? "" : status.retweeted_status.text;

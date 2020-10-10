@@ -1,49 +1,37 @@
-package com.example.afinal.MainTab.Home;
+package com.example.afinal.View.MainTab.Home;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.afinal.R;
-import com.example.afinal.Tools.NetworkManager;
-import com.example.afinal.Tools.WBHttpMethod;
 import com.example.afinal.ViewModel.WBStatusListViewModel;
 import com.example.afinal.ViewModel.WBStatusViewModel;
+import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.github.jdsjlzx.interfaces.OnRefreshListener;
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class MainTab01 extends Fragment implements View.OnClickListener {
 
     private View thisView;
     private LinearLayoutManager myLinearLayoutManager;
-    private RecyclerView myRecyclerView;
+    private LRecyclerView myRecyclerView;
     private MyRecycleViewAdapter myRecycleViewAdapter;
-
+    private LRecyclerViewAdapter lRecyclerViewAdapter;
     private WBStatusListViewModel listViewModel= new WBStatusListViewModel();;
 
     @Nullable
@@ -51,6 +39,7 @@ public class MainTab01 extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         thisView = inflater.inflate(R.layout.fragment_home,container,false);
 
+        setupUI();
 
 
 
@@ -65,7 +54,9 @@ public class MainTab01 extends Fragment implements View.OnClickListener {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 listViewModel.statusList = (List<WBStatusViewModel>) msg.obj;
-                setupUI();
+                myRecycleViewAdapter.vieModelList = listViewModel.statusList;
+                myRecyclerView.refreshComplete(1);
+                lRecyclerViewAdapter.notifyDataSetChanged();
             }
         };
 
@@ -77,13 +68,30 @@ public class MainTab01 extends Fragment implements View.OnClickListener {
 
         myRecyclerView = thisView.findViewById(R.id.rv_status);
         myLinearLayoutManager = new LinearLayoutManager(thisView.getContext());
+        //StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         myRecyclerView.setLayoutManager(myLinearLayoutManager);
         myRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //初始化适配器
         myRecycleViewAdapter = new MyRecycleViewAdapter(listViewModel.statusList);
+        lRecyclerViewAdapter = new LRecyclerViewAdapter(myRecycleViewAdapter);
         //设置适配器
-        myRecyclerView.setAdapter(myRecycleViewAdapter);
+        myRecyclerView.setAdapter(lRecyclerViewAdapter);
 
+        myRecyclerView.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //下拉刷新
+                getStatusList(false);
+
+            }
+        });
+        myRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                //上拉刷新
+                getStatusList(true);
+            }
+        });
 
 
 

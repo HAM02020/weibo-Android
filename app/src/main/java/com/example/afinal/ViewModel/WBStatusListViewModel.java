@@ -13,13 +13,11 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.example.afinal.Model.Pic_urls;
 import com.example.afinal.Model.WBStatus;
-import com.example.afinal.Tools.MyCallBack;
 import com.example.afinal.Tools.NetworkManager;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
